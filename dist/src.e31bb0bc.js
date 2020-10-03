@@ -117,27 +117,75 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"model.js":[function(require,module,exports) {
+})({"assets/image.png":[function(require,module,exports) {
+module.exports = "/image.90ac9039.png";
+},{}],"model.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.model = void 0;
+
+var _image = _interopRequireDefault(require("./assets/image.png"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var model = [{
   type: 'title',
-  value: 'strat'
+  value: 'Конструктор сайтов на чистом JAvaScript',
+  options: {
+    tag: 'h2',
+    styles: {
+      background: 'linear-gradient(to right, #ff0099, #493240)',
+      color: '#fff',
+      textalign: 'center',
+      padding: '1.5rem'
+    }
+  }
 }, {
   type: 'text',
   value: 'content text'
 }, {
-  type: 'colu',
+  type: 'column',
   value: ['111111', '222222', '333333', '2323231111']
 }, {
   type: 'image',
-  value: './assets/image.png'
+  value: _image.default
 }];
 exports.model = model;
+},{"./assets/image.png":"assets/image.png"}],"utils.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.row = row;
+exports.col = col;
+exports.img = img;
+exports.css = css;
+
+function row(content) {
+  var styles = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  return "<div class=\"row\" style=\"".concat(styles, "\">").concat(content, "</div>");
+}
+
+function col(content) {
+  return "<div class=\"col-sm\">".concat(content, "</div>");
+}
+
+function img(content) {
+  return "<img src=".concat(content, ">");
+}
+
+function css() {
+  var styles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var keys = Object.keys(styles);
+  var array = keys.map(function (key) {
+    return "".concat(key, ": ").concat(styles[key]);
+  });
+  return array.join(';');
+}
 },{}],"templates.js":[function(require,module,exports) {
 "use strict";
 
@@ -146,35 +194,39 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.templates = void 0;
 
-var _model = require("./model.js");
+var _utils = require("./utils.js");
 
 function title(block) {
-  return "\n    <div class=\"row\">\n        <div class=\"col-sm\">\n            <h1 class=\"h1\">".concat(block.value, "</h1>\n        </div>\n    </div>");
+  var _block$options = block.options,
+      _block$options$tag = _block$options.tag,
+      tag = _block$options$tag === void 0 ? 'h1' : _block$options$tag,
+      styles = _block$options.styles;
+  return (0, _utils.row)((0, _utils.col)("<".concat(tag, ">").concat(block.value, "<").concat(tag, ">")), (0, _utils.css)(styles));
 }
 
 function text(block) {
-  return "\n    <div class=\"row\">\n        <div class=\"col-sm\">\n            <p>".concat(block.value, "</p>           \n         </div>\n    </div>\n    ");
+  return (0, _utils.row)((0, _utils.col)("<p>".concat(block.value, "</p>")));
 }
 
-function colu(block) {
+function column(block) {
   var html = block.value.map(function (item) {
-    return "<div class=\"col-sm\">".concat(item, "</div>");
+    return (0, _utils.col)(item);
   });
-  return "<div class=\"row\">".concat(html.join(''), "</div>");
+  return (0, _utils.row)(html.join(''));
 }
 
 function image(block) {
-  return "\n    <div class=\"row\">\n    <img src=".concat(block.value, ">\n    </div>");
+  return (0, _utils.row)("<img src=".concat(block.value, ">"));
 }
 
 var templates = {
   title: title,
   text: text,
-  colu: colu,
+  column: column,
   image: image
 };
 exports.templates = templates;
-},{"./model.js":"model.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"./utils.js":"utils.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -262,7 +314,7 @@ _model.model.forEach(function (block) {
   var toHTML = _templates.templates[block.type];
 
   if (toHTML) {
-    $site.insertAdjacentHTML('beforeend', toHTML(block.value));
+    $site.insertAdjacentHTML('beforeend', toHTML(block));
   }
 });
 },{"./model":"model.js","./templates":"templates.js","./styles/main.css":"styles/main.css"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

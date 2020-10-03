@@ -1,40 +1,28 @@
-import {model} from './model.js'
+import {row, col, img, css} from './utils.js'
 function title(block) {
-    return `
-    <div class="row">
-        <div class="col-sm">
-            <h1 class="h1">${block.value}</h1>
-        </div>
-    </div>`
+    const { tag = 'h1', styles } = block.options
+    return row(col(`<${tag}>${block.value}<${tag}>`), css(styles))
 }
 
 function text(block) {
-    return `
-    <div class="row">
-        <div class="col-sm">
-            <p>${block.value}</p>           
-         </div>
-    </div>
-    `
+    
+    return row(col(`<p>${block.value}</p>`))
 }
 
-function colu(block) {
-    const html = block.value.map(item => `<div class="col-sm">${item}</div>`)
+function column(block) {
+    const html = block.value.map(item => col(item))
 
-    return `<div class="row">${html.join('')}</div>`
+    return row(html.join(''));
 }
 
 function image(block) {
-    return `
-    <div class="row">
-    <img src=${block.value}>
-    </div>`
+    return row(`<img src=${block.value}>`)
 }
 
  export const templates = {
     title: title,
     text: text,
-    colu: colu,
+    column: column,
      image: image,
      
  }
