@@ -5,15 +5,15 @@ import './styles/main.css'
 const $site = document.querySelector('#site')
 
 
-console.log(templates['colu']({value: 'colu'}))
-// model.forEach(block => {
-//     // let html = ''
-//     const toHTML = templates[block.type];
+// console.log(templates['colu']({value: 'colu'}))
+model.forEach(block => {
+    // let html = ''
+    const toHTML = templates[block.type];
 
-//     if (toHTML) {
-//         $site.insertAdjacentHTML('beforeend', toHTML(block.value))
+    if (toHTML) {
+        $site.insertAdjacentHTML('beforeend', toHTML(block.value))
 
-//     }
+    }
 
-// });
+});
 
