@@ -1,5 +1,6 @@
-import {Site} from './classes/site'
-import {Sidebar} from './classes/sidebar'
+import {Site} from './site'
+import {Sidebar} from './sidebar'
+
 
 export class App {
     constructor(model) {
@@ -9,7 +10,7 @@ export class App {
     init() {
         const site = new Site ('#site')
 
-        site.render(model)
+        site.render(this.model)
 
         
         const updateCallback = newBlock => {
