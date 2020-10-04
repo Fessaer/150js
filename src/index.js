@@ -1,19 +1,7 @@
 import {model} from './model'
-import {templates} from './templates'
 import './styles/main.css'
+import {App} from './classes/app'
 
-const $site = document.querySelector('#site')
 
 
-// console.log(templates['colu']({value: 'colu'}))
-model.forEach(block => {
-    // let html = ''
-    const toHTML = templates[block.type];
-
-    if (toHTML) {
-        $site.insertAdjacentHTML('beforeend', toHTML(block))
-
-    }
-
-});
-
+new App(model).init()
